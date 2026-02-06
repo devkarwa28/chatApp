@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 const generateToken = (id) =>{
-    return jwt.sign({id},"JSON123456",{expiresIn:"7d"});
+    return jwt.sign({payload},"JSON123456",{expiresIn:"7d"});
 };
 
 // Register Controller
