@@ -10,7 +10,14 @@ const { Socket } = require('dgram');
 require('./db/dbConfig')
 
 let app = express();
-app.use(cors())
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET","POST"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "token"]
+  })
+);
 app.use(express.json());
 app.use('/api/auth',AuthRouter)
 app.use('/api/users',userRouter)
@@ -21,8 +28,10 @@ const server = http.createServer(app);
 
 const io = new Server(server,{
     cors:{
-        origin: "*",
+        origin: "http://localhost:3000",
         methods: ["GET","POST"],
+        credentials: true,
+        allowedHeaders: ["Content-Type", "Authorization", "token"]
     },
 });
 const PORT = 5000;
