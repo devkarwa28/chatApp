@@ -1,0 +1,29 @@
+.window{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #e5ddd5;
+}
+.header{
+    padding: 16px;
+    background: #ededed;
+  border-bottom: 1px solid #ccc;
+}
+.header h3{
+    margin: 0px;
+}
+.messages{
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+.inputBox{
+    display: flex;
+    padding: 12px;
+    background: #f0f0f0;
+}
+.inputBox input{
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+}

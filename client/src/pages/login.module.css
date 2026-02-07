@@ -1,0 +1,66 @@
+.login{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcf5ebcc;
+}
+.login form{
+    width: 400px;
+    border-radius: 10px;
+    border: 2px solid #3a3a3a;
+    padding: 18px 12px;
+}
+.login h1{
+margin: 0px 0px 12px 0px;
+text-align: center;
+}
+.login h1 span{
+    color: #25d366;
+}
+.login form input{
+    width: 100%;
+    padding: 8px 10px;
+    background: transparent;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    display: block;
+}
+.login form input:focus{
+    outline: 0px;
+    border: 2px solid #25d366;
+}
+.login form button{
+    padding: 10px 12px;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: #25d366;
+    border-radius: 5px;
+    border: 0px;
+    color: white;
+}
+.or_divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.or_divider::before,
+.or_divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.or_divider span {
+  padding: 0 12px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+.login form h6{
+    margin: 0px;
+    text-align: center;
+    font-size: 16px;
+}
