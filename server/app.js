@@ -1,3 +1,4 @@
+console.log("server file started")
 let express = require('express');
 let http = require('http')
 const {Server} = require('socket.io')
@@ -35,13 +36,19 @@ const io = new Server(server,{
     },
 });
 const PORT = 5000;
-
+console.log("Socket IO inizilized")
 io.on("connection",(Socket)=>{
     console.log("NEW Client connected:",Socket.id);
 
     Socket.on("setup",(userData)=>{
-        Socket.join(userData._id);
-        Socket.emit("Connected");
+       if(!userData || !userData._id)
+       {
+        console.log("Socket setup called without  valid  user data");
+        return;
+       }
+       Socket.join(userData._id);
+       Socket.emit("connected");
+       console.log("user Joined personal room:",userData._id);
     })
 
     Socket.on("join chat",(chatId)=>{
