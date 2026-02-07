@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import windowStyles from "./chatwindow.module.css"
 import { useChat } from '../../context/ChatContext'
 import { useAuth } from '../../context/AuthContext';
-import { fetchMessages } from '../../services/messageServices';
+import { fetchMessages, sendMessages } from '../../services/messageServices';
 
 
 const ChatWindow = () => {
@@ -11,6 +11,7 @@ const ChatWindow = () => {
     const{user} = useAuth();
     const [messages,setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [newMessage, setNewMessage] = useState("")
 
     useEffect(()=>{
         if(!selectedChat){
@@ -32,6 +33,28 @@ const ChatWindow = () => {
         }
         loadMessages();
     },[selectedChat,user.token]);
+
+    const handleSendMessages = async () =>{
+        if(!newMessage.trim() || !selectedChat) return;
+        try{
+            const msg = await sendMessages(
+                newMessage,
+                selectedChat._id,
+                user.token
+            );
+            setMessages((prev)=>[...prev, msg]);
+            setNewMessage("");
+        }
+        catch(err){
+            console.log("Cannot send the message",err)
+        }
+    }
+
+    const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSendMessages();
+    }
+  };
 
   if(!selectedChat)
   {
@@ -76,8 +99,8 @@ const ChatWindow = () => {
             }
         </div>
         <div className={windowStyles.inputBox}>
-            <input type="text" placeholder='Type message' />
-            <button>Send</button>
+            <input type="text" placeholder='Type message' value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} onKeyDown={handleKeyDown} />
+            <button onClick={handleSendMessages}>Send</button>
         </div>
     </section>
   )
