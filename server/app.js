@@ -58,13 +58,9 @@ io.on("connection",(Socket)=>{
 
     Socket.on("new message",(message)=>{
         const chat = message.chat;
-        if(!chat.users) return;
-
-        chat.users.forEach((user)=>{
-            if(user._id === message.sender._id) return;
-            Socket.to(user._id).emit("message recived", message);
-
-        });
+        if(!chat || !chat._id) return;
+        Socket.to(chat._id).emit("message got",message);
+        console.log("Message emited to chat:",chat._id)
     })
     Socket.on("disconnect",()=>{
         console.log("Client Disconnected:",Socket.id)

@@ -4,6 +4,7 @@ import ChatWindow from '../components/ChatWindow/ChatWindow'
 import socket from '../socket'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
+import { fetchMessages } from '../services/messageServices'
 
 const ChatPage = () => {
   const [messages,setMessages] = useState([]);
@@ -11,15 +12,13 @@ const ChatPage = () => {
   const {selectedChat} = useChat();
 
   useEffect(()=>{
-    if(!user || !user._id)return;
-    console.log("Connecting socket")
-    socket.connect();
-    socket.emit("setup",user);
-    socket.on("connected",()=>{
-      console.log("WebSocket Connected Successfully")
-    });
+    if(!user?._id) return;
+    if(!socket.connected){
+      socket.connect();
+      socket.emit("setup",user);
+    }
     return () =>{
-      socket.disconnect();
+      socket.off("connected");
     }
   },[user]);
 
@@ -27,20 +26,41 @@ const ChatPage = () => {
     if(!selectedChat) return;
     socket.emit("join chat",selectedChat._id);
     console.log("Joined Chat:",selectedChat._id);
-    setMessages([]);
   },[selectedChat])
 
   useEffect(()=>{
-    socket.on("message recived",(newMessage) =>{
-      if(selectedChat && newMessage.chat._id === selectedChat._id)
-      {
-        setMessages((prev)=>[...prev,newMessage]);
-      }
-    })
-    return () =>{
-      socket.off("message recived");
+   const handleNewMessage = (newMessage) => {
+    if(!selectedChat) return;
+    if(newMessage.chat._id !== selectedChat._id)
+    {
+      return;
     }
+
+    setMessages((prev)=>{
+      if(prev.find((m)=> m._id === newMessage._id)) return prev;
+      return[...prev, newMessage];
+    });
+  };
+    socket.on("message got", handleNewMessage);
+
+    return () =>{
+      socket.off("message got", handleNewMessage)
+    };
+   
   },[selectedChat])
+
+  useEffect(()=>{
+    if(!selectedChat) return;
+
+    const loadMessages = async () =>{
+      const data = await fetchMessages(selectedChat._id, user.token);
+    setMessages(data);
+    socket.emit("join chat",selectedChat._id);
+    console.log("Joined Chat:", selectedChat._id);
+    };
+    loadMessages();
+  },[selectedChat])
+
   return (
     <section className='chat-page'>
         <Sidebar/>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import windowStyles from "./chatwindow.module.css"
 import { useChat } from '../../context/ChatContext'
 import { useAuth } from '../../context/AuthContext';
-import { fetchMessages, sendMessages } from '../../services/messageServices';
+import { sendMessages } from '../../services/messageServices';
 import socket from '../../socket';
 
 
@@ -12,22 +12,7 @@ const ChatWindow = ({messages, setMessages}) => {
     const{user} = useAuth();
     const [newMessage, setNewMessage] = useState("")
 
-    useEffect(()=>{
-        if(!selectedChat){
-            setMessages([]);
-            return;
-        }
-        const loadMessages = async () =>{
-            try{
-                const data = await fetchMessages(selectedChat._id,user.token);
-                setMessages(data)
-            }
-            catch(err){
-                console.log("Failed to get message")
-            }
-        }
-        loadMessages();
-    },[selectedChat,user.token]);
+    
 
     const handleSendMessages = async () =>{
         if(!newMessage.trim() || !selectedChat) return;
