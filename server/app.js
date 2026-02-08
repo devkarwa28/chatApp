@@ -62,6 +62,12 @@ io.on("connection",(Socket)=>{
         Socket.to(chat._id).emit("message got",message);
         console.log("Message emited to chat:",chat._id)
     })
+    Socket.on("typing",(chatId) =>{
+        Socket.in(chatId).emit("typing");
+    })
+    Socket.on("stop typing",(chatId)=>{
+        Socket.in(chatId).emit("stop typing");
+    })
     Socket.on("disconnect",()=>{
         console.log("Client Disconnected:",Socket.id)
     });

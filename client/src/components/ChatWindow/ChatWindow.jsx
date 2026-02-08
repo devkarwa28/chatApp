@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import windowStyles from "./chatwindow.module.css"
 import { useChat } from '../../context/ChatContext'
 import { useAuth } from '../../context/AuthContext';
@@ -6,11 +6,13 @@ import { sendMessages } from '../../services/messageServices';
 import socket from '../../socket';
 
 
-const ChatWindow = ({messages, setMessages}) => {
+const ChatWindow = ({messages, setMessages, isTyping}) => {
 
     const {selectedChat} = useChat();
     const{user} = useAuth();
     const [newMessage, setNewMessage] = useState("")
+    let typingTimeout;
+    
 
     
 
@@ -78,9 +80,20 @@ const ChatWindow = ({messages, setMessages}) => {
                     ))
                 )
             }
+            {
+                isTyping && (<p style={{fontStyle:'italic', color:"grey"}}>Typing....</p>)
+            }
         </div>
         <div className={windowStyles.inputBox}>
-            <input type="text" placeholder='Type message' value={newMessage} onChange={(e)=>setNewMessage(e.target.value)} onKeyDown={handleKeyDown} />
+            <input type="text" placeholder='Type message' value={newMessage} onChange={(e)=>{
+                setNewMessage(e.target.value);
+                socket.emit("typing",selectedChat._id);
+                if(typingTimeout) clearTimeout(typingTimeout);
+                typingTimeout = setTimeout(()=>{
+                    socket.emit("stop typing",selectedChat._id);
+                },2000);
+                
+                }} onKeyDown={handleKeyDown} />
             <button onClick={handleSendMessages}>Send</button>
         </div>
     </section>

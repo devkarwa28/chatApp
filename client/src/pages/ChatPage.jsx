@@ -8,6 +8,7 @@ import { fetchMessages } from '../services/messageServices'
 
 const ChatPage = () => {
   const [messages,setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
   const {user} = useAuth();
   const {selectedChat} = useChat();
 
@@ -59,12 +60,25 @@ const ChatPage = () => {
     console.log("Joined Chat:", selectedChat._id);
     };
     loadMessages();
-  },[selectedChat])
+  },[selectedChat]);
+
+  useEffect(()=>{
+    socket.on("typing",()=>{
+      setIsTyping(true);
+    })
+    socket.on("stop typing",()=>{
+      setIsTyping(false);
+    })
+    return () =>{
+      socket.off("typing");
+      socket.off("stop typing");
+    }
+  },[])
 
   return (
     <section className='chat-page'>
         <Sidebar/>
-        <ChatWindow messages={messages} setMessages={setMessages} />
+        <ChatWindow messages={messages} setMessages={setMessages} isTyping={isTyping} />
     </section>
   )
 }
