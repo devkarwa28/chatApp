@@ -8,12 +8,16 @@
     padding: 16px;
     background: #ededed;
   border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
 }
 .header h3{
     margin: 0px;
 }
 .messages{
     flex: 1;
+    display: flex;
+  flex-direction: column;
     padding: 16px;
     overflow-y: auto;
 }
@@ -35,7 +39,16 @@
   align-self: flex-end;
   max-width: 60%;
 }
+.myMessage p{
+  margin: 0px;
+}
+.otherMessage p{
+  margin: 0px;
+}
 
+.backBtn{
+  display: none;
+}
 .otherMessage {
   background: #ffffff;
   padding: 8px 12px;
@@ -43,4 +56,15 @@
   border-radius: 8px;
   align-self: flex-start;
   max-width: 60%;
+}
+@media (max-width: 768px) {
+.backBtn{
+  padding: 4px 6px;
+  color: white;
+  background-color: #25d366;
+  border-radius: 3px;
+  border: 0px;
+  font-weight: 700;
+  display: block;
+}
 }

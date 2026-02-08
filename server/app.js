@@ -1,4 +1,4 @@
-console.log("server file started")
+
 let express = require('express');
 let http = require('http')
 const {Server} = require('socket.io')
@@ -35,7 +35,7 @@ const io = new Server(server,{
         allowedHeaders: ["Content-Type", "Authorization", "token"]
     },
 });
-const PORT = 5000;
+
 console.log("Socket IO inizilized")
 io.on("connection",(Socket)=>{
     console.log("NEW Client connected:",Socket.id);
@@ -73,7 +73,7 @@ io.on("connection",(Socket)=>{
     });
 
 });
-
+const PORT = process.env.PORT || 5000;
 server.listen(PORT,()=>{
     console.log("Server started on  PORT:",PORT)
 })

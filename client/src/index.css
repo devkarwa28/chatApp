@@ -10,4 +10,30 @@ body{
   height: 100vh;
   background-color: #f5f5f5;
 }
+.chat_page_sidebar{
+  width: 20%;
+  display: flex;
+  border-right: 2px solid black;
+}
+.chat-page-chatWindow{
+  width: 80%;
+  display: flex;
+}
+@media (max-width: 768px) {
+  .chat-page{
+    flex-direction: column;
+  }
+  .hide-on-mobile{
+    display: none !important;
+  }
+  .chat_page_sidebar{
+  width: 100%;
+  display: flex;
+  border-right: 2px solid black;
+}
+.chat-page-chatWindow{
+  width: 100%;
+  display: flex;
+}
+}
 

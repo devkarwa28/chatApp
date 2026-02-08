@@ -75,3 +75,21 @@ text-align: center;
     text-align: center;
     font-size: 16px;
 }
+@media (max-width: 768px) {
+    .login{
+        height: 100vh;
+    }
+    .login form{
+        width: 300px
+    }
+    .login h1{
+        font-size: 22px;
+    }
+    .login form button{
+        padding: 8px;
+        font-size: 16px;
+    }
+    .credits h2{
+        font-size: 16px;
+    }
+}

@@ -8,7 +8,7 @@ import socket from '../../socket';
 
 const ChatWindow = ({messages, setMessages, isTyping}) => {
 
-    const {selectedChat} = useChat();
+    const {selectedChat, setSelectedChat} = useChat();
     const{user} = useAuth();
     const [newMessage, setNewMessage] = useState("")
     let typingTimeout;
@@ -68,6 +68,9 @@ const ChatWindow = ({messages, setMessages, isTyping}) => {
                     .join(", ")
                 }
             </h3>
+            <button className={windowStyles.backBtn} onClick={()=>setSelectedChat(null)}>
+                Back 
+            </button>
         </div>
         <div className={windowStyles.messages}>
             {

@@ -12,7 +12,7 @@ const authMiddleware = async(req,res,next) =>{
         {
             return res.status(401).json({message: "No Token"});
         }
-        const decode = jwt.verify(token,"JSON123456");
+        const decode = jwt.verify(token,process.env.JWT_KEY);
         
         const user = await User.findById(decode.id).select("-password");
 

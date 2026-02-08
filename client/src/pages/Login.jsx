@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <>
     <section className={loginStyles.login}>
-        <div style={{flex:1, display:"flex" ,alignItems: 'center'}}>
+        <div className='formBox' style={{flex:1, display:"flex" ,alignItems: 'center'}}>
             <form onSubmit={submitHandler}>
             <h1>Login To <span>MyChat</span></h1>
             <input type="email" name="email" onChange={changeHandler} placeholder='Email' value={formdata.email} />
