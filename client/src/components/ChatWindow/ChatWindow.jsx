@@ -3,14 +3,13 @@ import windowStyles from "./chatwindow.module.css"
 import { useChat } from '../../context/ChatContext'
 import { useAuth } from '../../context/AuthContext';
 import { fetchMessages, sendMessages } from '../../services/messageServices';
+import socket from '../../socket';
 
 
-const ChatWindow = () => {
+const ChatWindow = ({messages, setMessages}) => {
 
     const {selectedChat} = useChat();
     const{user} = useAuth();
-    const [messages,setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState("")
 
     useEffect(()=>{
@@ -20,15 +19,11 @@ const ChatWindow = () => {
         }
         const loadMessages = async () =>{
             try{
-                setLoading(true);
                 const data = await fetchMessages(selectedChat._id,user.token);
                 setMessages(data)
             }
             catch(err){
                 console.log("Failed to get message")
-            }
-            finally{
-                setLoading(false);
             }
         }
         loadMessages();
@@ -43,6 +38,7 @@ const ChatWindow = () => {
                 user.token
             );
             setMessages((prev)=>[...prev, msg]);
+            socket.emit("new message",msg)
             setNewMessage("");
         }
         catch(err){
@@ -88,7 +84,7 @@ const ChatWindow = () => {
         </div>
         <div className={windowStyles.messages}>
             {
-                loading ? (<p>Loading Messages</p>) : messages.length === 0 ?(<p>No messages</p>) :
+                messages.length === 0 ?(<p>No messages</p>) :
                 (
                     messages.map((msg) => (
                         <div key={msg._id} className={msg.sender._id === user._id ? windowStyles.myMessage : windowStyles.otherMessage}>
@@ -106,4 +102,4 @@ const ChatWindow = () => {
   )
 }
 
-export default ChatWindow
+export default ChatWindow;

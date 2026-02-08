@@ -9,7 +9,7 @@ const Sidebar = () => {
     const {user, logout} = useAuth();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const {setSelectedChat, chats, setChats} = useChat();
+    const {setSelectedChat ,chats, setChats} = useChat();
     const handleUserClick = async (userId) =>{
         try{
             const chat = await accessChat(userId,user.token);

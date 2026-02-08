@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import loginStyles from './login.module.css'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const Login = () => {
@@ -44,7 +44,7 @@ const Login = () => {
                   <span>OR</span>
             </div>
             <div>
-                <h6 className='text-center'>Dont Have Account Register</h6>
+                <h6 className='text-center'>Dont Have Account <NavLink to="/register">Register Now</NavLink></h6>
             </div>
         </form>
     </section>
