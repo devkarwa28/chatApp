@@ -32,8 +32,10 @@ const Login = () => {
     }
 
   return (
+    <>
     <section className={loginStyles.login}>
-        <form onSubmit={submitHandler}>
+        <div style={{flex:1, display:"flex" ,alignItems: 'center'}}>
+            <form onSubmit={submitHandler}>
             <h1>Login To <span>MyChat</span></h1>
             <input type="email" name="email" onChange={changeHandler} placeholder='Email' value={formdata.email} />
             <input type="password" name="password" onChange={changeHandler} placeholder='Password' value={formdata.password}/>
@@ -47,7 +49,12 @@ const Login = () => {
                 <h6 className='text-center'>Dont Have Account <NavLink to="/register">Register Now</NavLink></h6>
             </div>
         </form>
+        </div>
+        <footer className={loginStyles.credits}>
+            <h2>Designed & Developed By <span>Dev Karwa</span></h2>
+        </footer>
     </section>
+    </>
   )
 }
 

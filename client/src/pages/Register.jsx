@@ -36,7 +36,8 @@ const Register = () => {
   }
   return (
     <section className={registerStyles.login}>
-      <form onSubmit={submitHandler}>
+      <div style={{flex:1, display:"flex" ,alignItems: 'center'}}>
+         <form onSubmit={submitHandler}>
         <h1>Register On <span>MyChat</span></h1>
         {error && <p style={{color: 'red'}}>{error}</p>}
         <input type="text" placeholder='Enter Your Username' name='uname' value={formData.uname} onChange={changeHandler}/>
@@ -48,10 +49,14 @@ const Register = () => {
             {loading ? "Registering" : "Register"}
           </button>
         </div>
-        <p>
+        <p style={{textAlign:'center',marginTop:'24px'}}>
           Already have a Account ? <NavLink to="/login">Login</NavLink>
         </p>
       </form>
+      </div>
+      <footer className={registerStyles.credits}>
+                  <h2>Designed & Developed By <span>Dev Karwa</span></h2>
+      </footer>
     </section>
   )
 }

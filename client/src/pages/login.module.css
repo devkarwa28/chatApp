@@ -1,15 +1,26 @@
 .login{
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #fcf5ebcc;
+}
+.credits{
+    width: 100%;
+    text-align: center;
+    background-color: #25d366;
+    align-items: end;
+}
+.credits h2{
+    color: white;
 }
 .login form{
     width: 400px;
     border-radius: 10px;
     border: 2px solid #3a3a3a;
     padding: 18px 12px;
+    flex: 1;
 }
 .login h1{
 margin: 0px 0px 12px 0px;
