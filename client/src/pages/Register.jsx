@@ -4,6 +4,7 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const API = process.env.API;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     uname: "",
@@ -23,7 +24,7 @@ const Register = () => {
     setError("")
     try{
       setLoading(true)
-      const {data} = await axios.post("http://localhost:5000/api/auth/register",formData);
+      const {data} = await axios.post(`${API}/auth/register`,formData);
       localStorage.setItem("userInfo",JSON.stringify(data));
       navigate("/chat");
     }

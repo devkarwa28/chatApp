@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URl = "http://localhost:5000/api";
+const API_URl = process.env.API;
 
 export const fetchUsers = async(token) =>{
     const {data} = await axios.get(`${API_URl}/users`,{

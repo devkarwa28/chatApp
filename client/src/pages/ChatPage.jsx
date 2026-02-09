@@ -60,7 +60,7 @@ const ChatPage = () => {
     console.log("Joined Chat:", selectedChat._id);
     };
     loadMessages();
-  },[selectedChat]);
+  },[selectedChat,user.token]);
 
   useEffect(()=>{
     socket.on("typing",()=>{

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API = "http://localhost:5000/api";
+const API = process.env.API;
 
 export const accessChat = async (userId, token) =>{
     const {data} = await axios.post(`${API}/chats`,{userId},{

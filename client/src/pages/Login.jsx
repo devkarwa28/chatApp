@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const Login = () => {
+    const API = process.env.API;
     const navigate = useNavigate();
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
@@ -19,7 +20,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try{
-            const res = await axios.post("http://localhost:5000/api/auth/login", formdata)
+            const res = await axios.post(`${API}/auth/login`, formdata)
         localStorage.setItem("userInfo",JSON.stringify(res.data));
         navigate("/chat");
         }
@@ -48,6 +49,7 @@ const Login = () => {
             <div>
                 <h6 className='text-center'>Dont Have Account <NavLink to="/register">Register Now</NavLink></h6>
             </div>
+            {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
         </form>
         </div>
         <footer className={loginStyles.credits}>

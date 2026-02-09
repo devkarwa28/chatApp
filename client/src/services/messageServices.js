@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const  API = "http://localhost:5000/api"
+const  API = process.env.API
 
 export const fetchMessages = async (chatId, token) =>{
     const {data} = await axios.get(`${API}/message/${chatId}`,{
