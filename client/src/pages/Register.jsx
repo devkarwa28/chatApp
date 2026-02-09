@@ -4,7 +4,7 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const API = process.env.API_URL;
+  const API = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     uname: "",

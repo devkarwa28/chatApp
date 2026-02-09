@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = process.env.API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const accessChat = async (userId, token) =>{
     const {data} = await axios.post(`${API_URL}/chats`,{userId},{
