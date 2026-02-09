@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const Login = () => {
-    const API = process.env.API;
+    const API = process.env.API_URL;
     const navigate = useNavigate();
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
