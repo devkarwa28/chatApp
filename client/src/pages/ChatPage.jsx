@@ -63,17 +63,23 @@ const ChatPage = () => {
   },[selectedChat,user.token]);
 
   useEffect(()=>{
-    socket.on("typing",()=>{
-      setIsTyping(true);
-    })
-    socket.on("stop typing",()=>{
-      setIsTyping(false);
-    })
-    return () =>{
-      socket.off("typing");
-      socket.off("stop typing");
+    if(!selectedChat) return;
+
+    const handleTyping = (chatId) => {
+      if(chatId === selectedChat._id) setIsTyping(true);
     }
-  },[])
+    const handleStopTyping = (chatId) => {
+      if(chatId === selectedChat._id) setIsTyping(false);
+    }
+
+    socket.on("typing", handleTyping)
+    socket.on("stop typing", handleStopTyping)
+
+    return () =>{
+      socket.off("typing", handleTyping);
+      socket.off("stop typing", handleStopTyping);
+    }
+  },[selectedChat])
 
   return (
     <main className='chat-page'>

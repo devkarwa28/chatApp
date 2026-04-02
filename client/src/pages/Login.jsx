@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Lock } from 'lucide-react'
 import loginStyles from './login.module.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';

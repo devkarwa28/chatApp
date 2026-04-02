@@ -13,7 +13,21 @@ const ChatWindow = ({ messages, setMessages, isTyping }) => {
     const { user } = useAuth();
     const [newMessage, setNewMessage] = useState("")
     const scrollRef = useRef();
-    let typingTimeout;
+    const typingTimeoutRef = useRef();
+    const isCurrentlyTypingRef = useRef(false);
+
+    useEffect(() => {
+        // Cleanup function for typing status when leaving a chat
+        return () => {
+            if (isCurrentlyTypingRef.current && selectedChat) {
+                socket.emit("stop typing", selectedChat._id);
+                isCurrentlyTypingRef.current = false;
+            }
+            if (typingTimeoutRef.current) {
+                clearTimeout(typingTimeoutRef.current);
+            }
+        };
+    }, [selectedChat]);
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,7 +44,12 @@ const ChatWindow = ({ messages, setMessages, isTyping }) => {
             setMessages((prev) => [...prev, msg]);
             socket.emit("new message", msg)
             setNewMessage("");
+            
+            if (typingTimeoutRef.current) {
+                clearTimeout(typingTimeoutRef.current);
+            }
             socket.emit("stop typing", selectedChat._id);
+            isCurrentlyTypingRef.current = false;
         }
         catch (err) {
             console.log("Cannot send the message", err)
@@ -130,10 +149,17 @@ const ChatWindow = ({ messages, setMessages, isTyping }) => {
                         value={newMessage}
                         onChange={(e) => {
                             setNewMessage(e.target.value);
-                            socket.emit("typing", selectedChat._id);
-                            if (typingTimeout) clearTimeout(typingTimeout);
-                            typingTimeout = setTimeout(() => {
+                            
+                            if(!isCurrentlyTypingRef.current)
+                            {
+                                isCurrentlyTypingRef.current = true;
+                                socket.emit("typing", selectedChat._id);
+                            }
+
+                            if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+                            typingTimeoutRef.current = setTimeout(() => {
                                 socket.emit("stop typing", selectedChat._id);
+                                isCurrentlyTypingRef.current = false;
                             }, 3000);
                         }}
                         onKeyDown={handleKeyDown}

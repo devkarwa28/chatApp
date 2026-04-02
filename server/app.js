@@ -37,39 +37,39 @@ const io = new Server(server,{
 });
 
 console.log("Socket IO inizilized")
-io.on("connection",(Socket)=>{
-    console.log("NEW Client connected:",Socket.id);
+io.on("connection",(socket)=>{
+    console.log("NEW Client connected:",socket.id);
 
-    Socket.on("setup",(userData)=>{
+    socket.on("setup",(userData)=>{
        if(!userData || !userData._id)
        {
-        console.log("Socket setup called without  valid  user data");
+        console.log("socket setup called without  valid  user data");
         return;
        }
-       Socket.join(userData._id);
-       Socket.emit("connected");
+       socket.join(userData._id);
+       socket.emit("connected");
        console.log("user Joined personal room:",userData._id);
     })
 
-    Socket.on("join chat",(chatId)=>{
-        Socket.join(chatId)
+    socket.on("join chat",(chatId)=>{
+        socket.join(chatId)
         console.log("User Joined Chat:",chatId);
     })
 
-    Socket.on("new message",(message)=>{
+    socket.on("new message",(message)=>{
         const chat = message.chat;
         if(!chat || !chat._id) return;
-        Socket.to(chat._id).emit("message got",message);
+        socket.to(chat._id).emit("message got",message);
         console.log("Message emited to chat:",chat._id)
     })
-    Socket.on("typing",(chatId) =>{
-        Socket.in(chatId).emit("typing");
+    socket.on("typing",(chatId) =>{
+        socket.to(chatId).emit("typing", chatId);
     })
-    Socket.on("stop typing",(chatId)=>{
-        Socket.in(chatId).emit("stop typing");
+    socket.on("stop typing",(chatId)=>{
+        socket.to(chatId).emit("stop typing", chatId);
     })
-    Socket.on("disconnect",()=>{
-        console.log("Client Disconnected:",Socket.id)
+    socket.on("disconnect",()=>{
+        console.log("Client Disconnected:",socket.id)
     });
 
 });
