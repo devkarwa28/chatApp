@@ -220,3 +220,33 @@
     background: var(--bg-dark);
   }
 }
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .searchWrapper {
+    padding: 12px 20px;
+  }
+
+  .user_item {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .username {
+    font-size: 14px;
+  }
+
+  .email {
+    font-size: 12px;
+  }
+}
