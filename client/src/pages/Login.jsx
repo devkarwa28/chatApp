@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import loginStyles from './login.module.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { Lock, Mail } from 'lucide-react';
 
 const Login = () => {
     const API = process.env.REACT_APP_API_URL;
