@@ -76,14 +76,14 @@ const ChatPage = () => {
   },[])
 
   return (
-    <section className='chat-page'>
-          <div className={`chat_page_sidebar ${selectedChat ? "hide-on-mobile" : ""}`}>
-            <Sidebar/>
-          </div>
-          <div className={`chat-page-chatWindow ${!selectedChat ? "hide-on-mobile": ""}`}>
-            <ChatWindow messages={messages} setMessages={setMessages} isTyping={isTyping} />
-          </div>
-    </section>
+    <main className='chat-page'>
+      <div className={`chat_page_sidebar ${selectedChat ? "hide-on-mobile" : ""}`}>
+        <Sidebar />
+      </div>
+      <div className={`chat-page-chatWindow ${selectedChat ? "active" : "hide-on-mobile"}`}>
+        <ChatWindow messages={messages} setMessages={setMessages} isTyping={isTyping} />
+      </div>
+    </main>
   )
 }
 
